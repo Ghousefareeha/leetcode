@@ -1,50 +1,49 @@
 #include <iostream>
 #include <vector>
+#include <bits/stdc++.h>
 
 using namespace std;
 
 class Solution {
 public:
     vector<int> spiralOrder(vector<vector<int>>& matrix) {
-        vector<int> result;
+        vector<int>ans;
+        int n=matrix.size();
+        int m=matrix[0].size();
+        int left=0,right=m-1;
+        int top=0,bottom=n-1;
+        while (top <= bottom && left <= right) {
+      
+    // For moving left to right
+    for (int i = left; i <= right; i++)
+      ans.push_back(matrix[top][i]);
 
-        if (matrix.empty() || matrix[0].empty()) {
-            return result;
-        }
+    top++;
 
-        int row_start = 0, row_end = matrix.size() - 1;
-        int column_start = 0, column_end = matrix[0].size() - 1;
+    // For moving top to bottom.
+    for (int i = top; i <= bottom; i++)
+      ans.push_back(matrix[i][right]);
 
-        while (row_start <= row_end && column_start <= column_end) {
-            // Traverse top row
-            for (int col = column_start; col <= column_end; col++) {
-                result.push_back(matrix[row_start][col]);
-            }
-            row_start++;
+    right--;
+    
+    // For moving right to left.
+    if (top <= bottom) {
+      for (int i = right; i >= left; i--)
+       ans.push_back(matrix[bottom][i]);
 
-            // Traverse right column
-            for (int row = row_start; row <= row_end; row++) {
-                result.push_back(matrix[row][column_end]);
-            }
-            column_end--;
-
-            // Traverse bottom row
-            if (row_start <= row_end) {
-                for (int col = column_end; col >= column_start; col--) {
-                    result.push_back(matrix[row_end][col]);
-                }
-                row_end--;
-            }
-
-            // Traverse left column
-            if (column_start <= column_end) {
-                for (int row = row_end; row >= row_start; row--) {
-                    result.push_back(matrix[row][column_start]);
-                }
-                column_start++;
-            }
-        }
-
-        return result;
+      bottom--;
     }
+
+    // For moving bottom to top.
+    if (left <= right) {
+      for (int i = bottom; i >= top; i--)
+        ans.push_back(matrix[i][left]);
+
+      left++;
+    }
+  }
+  return ans;
+
+
+        }
 };
