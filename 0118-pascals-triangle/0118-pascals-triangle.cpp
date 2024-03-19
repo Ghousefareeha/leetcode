@@ -5,21 +5,23 @@ using namespace std;
 
 class Solution {
 public:
-    vector<vector<int>> generate(int numRows) {
-        vector<vector<int>> result;
-
-        for (int i = 0; i < numRows; ++i) {
-            vector<int> row(i + 1, 1);  // Initialize the row with 1s
-
-            // Calculate values inside the row (excluding the first and last elements)
-            for (int j = 1; j < i; ++j) {
-                row[j] = result[i - 1][j - 1] + result[i - 1][j];
-            }
-
-            result.push_back(row);
+    vector<int>generateRow(int row){
+        vector<int>ansRow;
+        long long ans=1;
+        ansRow.push_back(1);
+        for(int i=1;i<row;i++){
+            ans=ans*(row-i);
+            ans=ans/(i);
+            ansRow.push_back(ans);
         }
-
-        return result;
+        return ansRow;
+    }
+    vector<vector<int>> generate(int numRows) {
+        vector<vector<int>>ans;
+        for(int i=1;i<=numRows;i++){
+            ans.push_back(generateRow(i));
+        }
+        return ans;
     }
 };
 
